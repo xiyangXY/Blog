@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
     <style>
         table,th,td{
             border: 1px solid #ccc;
@@ -18,27 +18,35 @@
     </div>
 
     <template id="table">
-        <table>
-            <tr>
-                <td>count</td>
-                <td>name</td>
-                <td>title</td>
-            </tr>
-            <tr v-for="item in arr">
-                <td>{{item.count}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.title}}</td>
-            </tr>
-        </table>
+        <i-table :columns="columns1" :data="arr"></i-table>
     </template>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
     <script>
         Vue.component('table-list', {
             props: ['arr'],
-            template: '#table'
+            template: '#table',
+            data:function(){
+                return {
+                    columns1: [
+                    {
+                        title: 'count',
+                        key: 'count'
+                    },
+                    {
+                        title: 'name',
+                        key: 'name'
+                    },
+                    {
+                        title: 'title',
+                        key: 'title'
+                    }
+                ]
+                }
+            }
         })
 
         var app = new Vue({
