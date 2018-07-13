@@ -6,65 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        table,th,td{
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-            <!-- 使用 router-link 组件来导航. -->
-            <!-- 通过传入 `to` 属性指定链接. -->
-            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-            <router-link to="/javascript">javascript</router-link>
-            <router-link to="/java">java</router-link>
-
-            <!-- 路由出口 -->
-            <!-- 路由匹配到的组件将渲染在这里 -->
-            <router-view></router-view>
+        <table-list :arr="arr"></table-list>
     </div>
 
-    <template id="javascript">
-        <h1>javascript</h1>
-    </template>
-    <template id="java">
-        <h1>java</h1>
+    <template id="table">
+        <table>
+            <tr>
+                <td>count</td>
+                <td>name</td>
+                <td>title</td>
+            </tr>
+            <tr v-for="item in arr">
+                <td>{{item.count}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.title}}</td>
+            </tr>
+        </table>
     </template>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        // 0. 如果使用模块化机制编程，导入Vue和VueRouter，要调用 Vue.use(VueRouter)
+        Vue.component('table-list', {
+            props: ['arr'],
+            template: '#table'
+        })
 
-        // 1. 定义 (路由) 组件。
-        // 可以从其他文件 import 进来
-        const javascript = Vue.extend({
-            template:'#javascript'
-        });
-        const java = Vue.extend({
-            template:'#java'
-        });
-
-        // 2. 定义路由
-        // 每个路由应该映射一个组件。 其中"component" 可以是
-        // 通过 Vue.extend() 创建的组件构造器，
-        // 或者，只是一个组件配置对象。
-        // 我们晚点再讨论嵌套路由。
-        const routes = [
-        { path: '/javascript', component: javascript },
-        { path: '/java', component: java }
-        ]
-
-        // 3. 创建 router 实例，然后传 `routes` 配置
-        // 你还可以传别的配置参数, 不过先这么简单着吧。
-        const router = new VueRouter({
-        routes // (缩写) 相当于 routes: routes
-        }) 
-
-        // 4. 创建和挂载根实例。
-        // 记得要通过 router 配置参数注入路由，
-        // 从而让整个应用都有路由功能
-        const app = new Vue({
-        router
-        }).$mount('#app')
-
-        // 现在，应用已经启动了！
+        var app = new Vue({
+            el:'#app',
+            data: {
+                arr:[]
+            },
+            methods:{
+                lists:function(){
+                    var that = this;
+                    axios.get('https://api.douban.com/v2/book/1220562')
+                    .then(function (response) {
+                        console.log(response.data.tags);
+                        that.arr = response.data.tags;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            },
+            created(){
+                this.lists();
+            }
+        })
     </script>
 </body>
 </html>
