@@ -18,7 +18,7 @@
     </div>
 
     <template id="table">
-        <i-table :columns="columns1" :data="arr"></i-table>
+        <i-table :columns="columns" :data="arr"></i-table>
     </template>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -31,20 +31,20 @@
             template: '#table',
             data:function(){
                 return {
-                    columns1: [
-                    {
-                        title: 'count',
-                        key: 'count'
-                    },
-                    {
-                        title: 'name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'title',
-                        key: 'title'
-                    }
-                ]
+                    columns: [
+                        {
+                            title: 'count',
+                            key: 'count'
+                        },
+                        {
+                            title: 'name',
+                            key: 'name'
+                        },
+                        {
+                            title: 'title',
+                            key: 'title'
+                        }
+                    ]
                 }
             }
         })
