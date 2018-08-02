@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<!--面包屑导航-->
+<ol class="breadcrumb">
+    <li><a href="/admin">首页</a></li>
+    <li><span>用户管理</span></li>
+</ol>
+
+<!--表格-->
+<h3>用户列表</h3>
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>是否为管理员</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in users %}
+        <tr>
+            <td>{{item._id.toString()}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.password}}</td>
+            <td>{{item.isAdmin}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!--分页-->
+    {% include 'page.html' %}
+</div>
+{% endblock %}

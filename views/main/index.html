@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>曦阳的博客</title>
+    <!-- bootstrap.min.css -->
+    <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/xiyang/css/index.css" rel="stylesheet">
+    <link href="/public/font/iconfont.css" rel="stylesheet">
+</head>
+<body>
+<!--头部-->
+<header>
+    <div class="bg_img">
+        <img src="/public/xiyang/images/rose.jpg" alt="rose" class="img-rounded">
+        <div class="info_icon">
+            <a href="https://github.com/xiyangXY" target="_blank"><i class="iconfont icon-github"></i></a>
+            <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1637167283" target="_blank"><i class="iconfont icon-qq-copy"></i></a>
+            <a href="#" data-toggle="modal" data-target="#myModal"><i class="iconfont icon-weixin"></i></a>
+            <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=MAEGAwcBBgcCCANwQUEeU19d" target="_blank"><i class="iconfont icon-youxiang"></i></a>
+            <a href="http://weibo.com/xiyangit" target="_blank"><i class="iconfont icon-weibo"></i></a>
+        </div>
+    </div>
+</header>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">微信</h4>
+            </div>
+            <div class="modal-body text-center">
+                <img src="/public/xiyang/images/weixin.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 导航 -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">XING YANG</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if cata == ''%}
+                    <li class="active"><a href="/">首页</a></li>
+                {%else%}
+                    <li><a href="/">首页</a></li>
+                {%endif%}
+                {%for item in categorys%}
+                    {% if cata == item.id%}
+                    <li class="active"><a href="/?category={{item.id}}">{{item.name}}</a></li>
+                    {%else%}
+                    <li><a href="/?category={{item.id}}">{{item.name}}</a></li>
+                    {%endif%}
+                {%endfor%}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--主体-->
+<main class="container">
+    <div class="row">
+        <div class="col-sm-4 col-sm-push-8 col-xs-12">
+            <div class="mainRight ">
+                <!-- 用户信息框 -->
+                {% if userInfo._id %}
+                <div class="rightBox" id="userInfo">
+                    <h3>用户信息</h3>
+                    <p class="username">{{userInfo.username}}</p>
+
+                    {% if userInfo.isAdmin %}
+                    <p>你好，管理员!&nbsp;&nbsp;<a href="/admin">进入管理</a></p>
+                    {% else %}
+                    <p class="userInfo">你好，欢迎光临我的博客！</p>
+                    {% endif %}
+
+                    <a id="loginOut" href="javascript:;">退出</a>
+                </div>
+                {% else %}
+                <!-- 登录框 -->
+                <div class="rightBox clearfix" id="loginBox" >
+                    <h3>登录</h3>
+                    <form action="#" class="form-horizontal">
+                        <div class="form-group ">
+                            <label class="col-xs-2 control-label"><span class="glyphicon glyphicon-user"></span></label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="用户名" type="text" name="username">
+                                <!-- <span class="help-block">用户名长度在3-10个单位</span> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label"><span class="glyphicon glyphicon-lock"></span></label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="密码" type="password" name="password">
+                                <!-- <span class="help-block">密码中必须包含数字、字母</span> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-primary btn-block loginBtn" value="登录">
+                            <!--<input type="button" class="btn  btn-block myreset" value="重置">-->
+                            <!--<span class="myInfo"></span>-->
+                        </div>
+                        <p class="colWarning text-center"></p>
+                        <p class="text-right">  没有账号？ <a class="colMint" href="javascript:;">点击注册</a></p>
+                    </form>
+                </div>
+                {% endif %}
+                <!-- 注册框 -->
+                <div class="rightBox clearfix" id="registerBox" style="display: none">
+                    <h3>注册</h3>
+                    <form method="post" action="/api/user/register" class="form-horizontal">
+                        <div class="form-group ">
+                            <label class="col-xs-2 control-label"><span class="glyphicon glyphicon-user"></span></label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="用户名" type="text" name="username">
+                                <!-- <span class="help-block">用户名长度在3-10个单位</span> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label"><span class="glyphicon glyphicon-lock"></span></label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="密码" type="password" name="password">
+                                <!-- <span class="help-block">密码中必须包含数字、字母</span> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label"><span class="glyphicon glyphicon-lock"></span></label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="确认密码" type="password" name="repassword">
+                            </div>
+                        </div>
+                        <div class="form-group regbtn">
+                            <input type="button" class="btn btn-primary btn-block " value="注册">
+                            <!--<input type="button" class="btn  btn-block " value="重置">  -->
+                            <span class="myInfo"></span>
+                        </div>
+                        <p class="colWarning text-center"></p>
+                        <p class="text-right">已有账号？ <a href="javascript:;" class="colMint">点击登录</a></p>
+                    </form>
+                </div>
+                <!--百度搜索-->
+                <div class="rightBox hidden-xs clearfix">
+                    <h3>搜索</h3>
+                    <form onsubmit="return baiduWithHttps(this)" action="http://www.baidu.com/baidu" target="_blank">
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <input class="form-control" name="tn" type="hidden" value="SE_zzsearchcode_shhzc78w" />
+                                <input type="text"  class="form-control"  onfocus="checkHttps" name="word"  size="30" />
+                            </div>
+                            <div class="col-sm-4">
+                                <input class="btn btn-primary" type="submit" value="百度搜索">
+                            </div>
+                        </div>
+                    </form>
+                    <script src="http://s1.bdstatic.com/r/www/cache/global/js/BaiduHttps_20150714_zhanzhang.js"></script>
+                    <script>
+                        function checkHttps () {
+                            BaiduHttps.useHttps();
+                        }
+                        function baiduWithHttps (formname) {
+                            var data = BaiduHttps.useHttps();
+                            if (data.s === 0) {
+                                return true;
+                            } else {
+                                formname.action = 'https://www.baidu.com/baidu' + '?ssl_s=1&ssl_c=' + data.ssl_code;
+                                return true;
+                            }
+                        }
+                    </script>
+                </div>
+                <!--banner-->
+                <div class="rightBox hidden-xs">
+                    <h3>友情链接</h3>
+                    <P><a href="https://www.w3cschool.cn">W3Cschool</a></P>
+                    <P><a href="http://www.w3cplus.com/">W3Cplus</a></P>
+                    <P><a href="https://www.csdn.net">CSDN</a></P>
+                    <P><a href="https://www.oschina.net/">开源中国</a></P>
+                    <P><a href="https://github.com">github</a></P>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-sm-pull-4  col-xs-12">
+            <div class="leftBox">
+            {% if contents.length == 0%}
+            <div class="listBox text-center">
+                没有数据
+            </div>
+            {%else%}
+                {% for item in contents %}
+                <div class="listBox clearfix">
+                    <p><h3 style="color: #337ab7;">{{item.title}}</h3></p>
+                    <p class="content">{{item.desciption}}</p>
+                    <p class="colDefualt">
+                        <i class="iconfont icon-zuozhe" style="font-weight: 700"></i>  <span class="colInfo">{{item.user.username}}</span>
+                        <i class="iconfont icon-shijian"  style="font-weight: 700"></i> <span class="colInfo">{{item.addTime|date('Y-m-d H:i:s',-8*60)}}</span>
+                        <i class="iconfont icon-liulan"  style="font-weight: 700"></i>  <span class="colInfo">({{item.views}})</span>
+                        <i class="iconfont icon-pinglun"  style="font-weight: 700"></i> <span class="colInfo">({{item.comments.length}})</span>
+                    </p>
+                    <a href="/view?contentId={{item.id}}" class="pull-right"><button class="btn btn-default ">阅读全文</button></a>
+                </div>
+                {% endfor %}
+            {%endif%}
+
+                <!--分页-->
+                <div id="mypager">
+                    <ul class="pager">
+                        <li class="waves-effect previous">
+                            {% if page == 1 %}
+                            <a href="javascript:;">
+                                <i class="material-icons">没有上一页了</i>
+                            </a>
+                            {% else %}
+                            <a href="{{pageUrl}}?category={{cata}}&page={{page-1}}">
+                                <i class="material-icons">上一页</i>
+                            </a>
+                            {% endif %}
+                        </li>
+                        <li class="active middle">
+                            <a href="javascript:;">{{page}}/{{pages}}</a>
+                        </li>
+                        <li class="waves-effect next">
+                            {% if page < pages %}
+                            <a href="{{pageUrl}}?category={{cata}}&page={{page+1}}">
+                                <i class="material-icons">下一页</i>
+                            </a>
+                            {% elseif page >= pages %}
+                            <a href="javascript:;">
+                                <i class="material-icons">没有下一页了</i>
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--尾部-->
+<footer>
+    <p>版权所有© XI YANG</p>
+</footer>
+
+
+<!--jquery1.12.4.js-->
+<script src="/public/jquery/jquery1.12.4.js"></script>
+<!--bootstrap.min.js-->
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+<!--index.js-->
+<script src="/public/xiyang/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客后台管理</title>
+    <!-- bootstrap.min.css -->
+    <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/xiyang/css/index.css" rel="stylesheet">
+</head>
+<body>
+<!-- 导航 -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/admin">后台管理</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/admin/user">用户管理</a>
+                </li>
+                <li class="dropdown">
+                    <a href="/admin/category" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        分类管理
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/category">分类首页</a></li>
+                        <li><a href="/admin/category/add">分类添加</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/admin/content" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        内容管理
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/content">内容首页</a></li>
+                        <li><a href="/admin/content/add">内容添加</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/admin/comment">评论管理</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{userInfo.username}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/">返回前台</a></li>
+                        <!--<li><a href="#">退出</a></li>-->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {%block main%}{%endblock%}
+</div>
+
+
+
+<!--jquery1.12.4.js-->
+<script src="/public/jquery/jquery1.12.4.js"></script>
+<!--bootstrap.min.js-->
+<script src="/public/bootstrap/js/bootstrap.min.js"></script>
+<!--index.js-->
+<script src="/public/xiyang/js/index.js"></script>
+<!--ueditor-->
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/lang/zh-cn/zh-cn.js"> </script>
+<script>
+    //ueditor初始化
+    var ue = UE.getEditor('editor');
+</script>
+</body>
+</html>

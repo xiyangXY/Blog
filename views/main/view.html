@@ -1,0 +1,37 @@
+{%extends './layout.html'%}
+{%block content%}
+<div class="viewBox">
+    <h3 class="text-center">{{content.title}}</h3>
+    <p class="colDefualt text-center" style="margin: 20px 0">
+        作者：<span class="colInfo">{{userInfo.username}}</span>
+        -时间：<span class="colInfo">{{content.addTime|date('Y-m-d H:i:s',-8*60)}}</span>
+        -阅读：<span class="colInfo">{{content.views}}</span>
+        -评论：<span class="colInfo">{{content.comments.length}}</span>
+    </p>
+    <p class="content">{% autoescape %}{{content.content}}{% endautoescape %}</p>
+</div>
+<!--评论-->
+<div class="comment">
+        <h4 class="textLeft"> <strong>评论</strong> <span class="fr">一共有 <em id="messageCount">0</em>条评论</span></h4>
+        <p>{{userInfo.username}}</p>
+        {% if userInfo._id %}
+        <p class="textLeft clear">
+            <input type="hidden" name="contentid" id="contentId" value="{{content.id}}">
+            <textarea style="resize:none"  id="commitTextarea" class="commit_textarea" placeholder="请填写你的评论" rows="20" cols="20" wrap="hard"></textarea>
+            <button id="messageBtn" class="submit commit_submit">提交</button>
+        </p>
+        <!--评论-->
+        <div id="messageList">
+
+        </div>
+
+        <ul class="pager" style="display: block;">
+            <li class="waves-effect previous"><a href="javascript:;"><i class="material-icons">上一页</i></a></li>
+            <li class="middle"><a href="javascript:;">1 / 1</a></li>
+            <li class="waves-effect next"><a href="javascript:;"><i class="material-icons">下一页</i></a></li>
+        </ul>
+        {% else %}
+        <p class="bgDanger danger">您还没有登录，请先登录！</p>
+        {% endif %}
+</div>
+{%endblock%}

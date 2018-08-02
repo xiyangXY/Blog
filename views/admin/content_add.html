@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<!--面包屑导航-->
+<ol class="breadcrumb">
+    <li><a href="/admin">首页</a></li>
+    <li><a href="/admin/content">内容首页</a></li>
+    <li><span>内容添加</span></li>
+</ol>
+
+<h3>内容添加</h3>
+<div style="margin-bottom: 20px">
+    <form role="form" method="post">
+        <div class="form-group">
+            <label for="category">分类:</label>
+            <select class="form-control" name="category" id="category">
+                {%for item in category %}
+                <option value="{{item.id}}">{{item.name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="title">标题:</label>
+
+
+            <input type="text" name="title" class="form-control" id="title" placeholder="请输入内容标题">
+        </div>
+        <div class="form-group">
+            <label for="desciption">简介:</label>
+            <textarea rows="5" name="desciption" class="form-control" id="desciption" placeholder="请输入内容简介"></textarea>
+        </div>
+        <div class="form-group">
+            <!--<label for="content">内容:</label>-->
+            <!--<textarea rows="10" name="content" class="form-control" id="content" placeholder="请输入内容"></textarea>-->
+            <label for="editor">内容:</label>
+            <script id="editor" name="content" type="text/plain" style="width:100%;height:500px;"></script>
+        </div>
+        <button type="submit" class="btn btn-default">提交</button>
+    </form>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+<div id="mypager">
+    <ul class="pager">
+        <li class="waves-effect previous">
+            {% if page == 1 %}
+            <a href="javascript:;">
+                <i class="material-icons">没有上一页了</i>
+            </a>
+            {% else %}
+            <a href="{{pageUrl}}?page={{page-1}}">
+                <i class="material-icons">上一页</i>
+            </a>
+            {% endif %}
+        </li>
+        <li class="active middle">
+            <a href="javascript:;">{{page}}/{{pages}}</a>
+        </li>
+        <li class="waves-effect next">
+            {% if page < pages %}
+            <a href="{{pageUrl}}?page={{page+1}}">
+                <i class="material-icons">下一页</i>
+            </a>
+            {% elseif page >= pages %}
+            <a href="javascript:;">
+                <i class="material-icons">没有下一页了</i>
+            </a>
+            {% endif %}
+        </li>
+
+    </ul>
+</div>
