@@ -1,12 +1,15 @@
 # Blog
-这是我的博客项目(测试)
 博客项目
 npm install
 
 npm install body-parser --save
+
 npm install cookies --save
+
 npm install mongoose --save
+
 npm install express --save
+
 npm install swig --save
 
 启动mongodb数据库
