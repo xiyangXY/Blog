@@ -46,8 +46,7 @@ app.set('view engine','html');
 swig.setDefaults({cache: false});
 
 //bodyparser设置
-app.use(bodyParser.urlencoded({extend:true}));
-
+app.use(bodyParser.urlencoded({ extended: false }))
 
 //设置cookie
 app.use(function(req,res,next){
@@ -91,7 +90,7 @@ app.use('/api',require('./routers/api'));
 app.use('/',require('./routers/main'));
 
 //监听http请求
-mongoose.connect('mongodb://localhost:27018/blog',function(err){
+mongoose.connect('mongodb://localhost:27017/blog',{ useNewUrlParser: true },function(err){
     if(err){
         console.log('数据库连接失败');
     }else{
